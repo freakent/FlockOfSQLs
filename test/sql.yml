@@ -1,0 +1,26 @@
+#
+# comments
+#
+- name: Find countries in Europe
+  sql: >
+    select name, population, flag
+      from countries
+     where continent = 'Europe'
+  pg:
+      sql: >
+        select 'pg', 'pg', 'pg'
+          from countries
+         where continent = 'pg'
+#
+# comments
+#
+- name: Create a country
+  sql: >
+    insert into countries(name, population, flag, continent)
+    values($name, $population, $flag, $continent)
+#
+# comments
+#
+- name: Find how many countries in a continent
+  sql: >
+    select count(name) from countries where continent = $1

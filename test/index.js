@@ -4,7 +4,7 @@ var expect = require('chai').expect
 describe('flock of SQLs', function(){
 
     describe('for default dialect', function() {
-        var SQL = require('../FlockOfSQLs')()
+        var SQL = require('../FlockOfSQLs')('./test/sql.yml')
 
         it('should return named sql statements', function() {
 
@@ -21,7 +21,7 @@ describe('flock of SQLs', function(){
     })
 
     describe('for a specific dialect', function() {
-        var SQL = require('../FlockOfSQLs')('pg')
+        var SQL = require('../FlockOfSQLs')('test/sql.yml', 'pg')
 
         it('should return named sql statements', function() {
             var sql = SQL.statement('Find countries in Europe')

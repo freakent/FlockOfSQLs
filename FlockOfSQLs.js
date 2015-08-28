@@ -1,10 +1,10 @@
 var YAML = require('yamljs')
 
-module.exports = function(set) {
+module.exports = function(file, set) {
 
     this.set = set || ''
     var self = this
-    var flock = YAML.load('./test/sql.yml')
+    var flock = YAML.load(file)
 //    console.log('building flock for %s', set)
 
     return new instance(set)

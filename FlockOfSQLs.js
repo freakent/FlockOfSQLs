@@ -5,28 +5,27 @@ module.exports = function(file, set) {
     this.set = set || ''
     var self = this
     var flock = YAML.load(file)
+
 //    console.log('building flock for %s', set)
 
-    return new instance(set)
+    var data = {}
 
-    function instance(_set) {
-        this.statement = function(name){
-//            console.log('looking for name = %s, set = %s', name, _set)
+    for(x = 0; x < flock.length; x++) {
+//        console.log('>', flock[x])
 
-            for(x = 0; x < flock.length; x++) {
-                if (flock[x].name === name) {
-//                    console.log('found', flock[x])
-                    if (flock[x][_set]){
-//                        console.log('return', flock[x][_set].sql)
-                        return flock[x][_set].sql
-                    } else {
-//                        console.log('return', flock[x].sql)
-                        return flock[x].sql
-                    }
-                }
-            }
-//            console.log('return nope')
-            return null
+        if (flock[x][set]){
+//          console.log('return', flock[x][set].sql)
+            data[flock[x].name] = flock[x][set].sql
+        } else {
+//          console.log('return', flock[x].sql)
+            data[flock[x].name] = flock[x].sql
         }
+    }
+
+    console.log('flock %s', set, data)
+
+    return function(name) {
+        this.data = data
+        return (typeof data[name] === 'undefined') ? null : data[name]
     }
 }
